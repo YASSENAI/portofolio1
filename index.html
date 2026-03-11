@@ -214,17 +214,13 @@
       color: white;
     }
 
-    /* Hero Section */
+    /* Hero Section - Modified */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       padding: 0 5%;
-      background: linear-gradient(135deg, transparent 0%, var(--primary-light) 100%);
-      opacity: 0.05;
-    }
-    body.dark .hero {
-      background: linear-gradient(135deg, transparent 0%, var(--primary-dark) 100%);
+      background: var(--bg-color);
     }
 
     .hero-content {
@@ -761,7 +757,7 @@
   </header>
 
   <main>
-    <!-- Hero Section -->
+    <!-- Hero Section - Clean version without blur -->
     <section class="hero" id="home">
       <div class="hero-content">
         <div class="hero-text" data-aos="fade-right">
