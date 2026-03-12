@@ -24,10 +24,13 @@
       --bg-color: #ffffff;
       --card-bg: #ffffff;
       --header-bg: #f9fafb;
-      --footer-bg: #111827;
+      --footer-bg: #0a0f1c;
+      --footer-text: #f9fafb;
+      --footer-secondary: #94a3b8;
       --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
       --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
       --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -37,6 +40,8 @@
       --bg-color: #111827;
       --card-bg: #1f2937;
       --header-bg: #1f2937;
+      --footer-bg: #030712;
+      --footer-secondary: #6b7280;
       --shadow-sm: 0 4px 6px -1px rgb(255 255 255 / 0.1);
       --shadow-md: 0 10px 15px -3px rgb(255 255 255 / 0.1);
     }
@@ -633,7 +638,7 @@
       border-radius: 10px;
     }
 
-    /* Contact */
+    /* Contact Section */
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -649,11 +654,13 @@
       text-align: center;
       box-shadow: var(--shadow-md);
       transition: var(--transition);
+      border: 1px solid transparent;
     }
 
     .contact-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
     }
 
     .contact-icon {
@@ -671,26 +678,397 @@
       opacity: 0.8;
     }
 
-    /* Footer */
-    footer {
+    /* ===== IMPROVED FOOTER SECTION ===== */
+    .footer {
       background: var(--footer-bg);
+      color: var(--footer-text);
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 5% 2rem;
+    }
+
+    /* Animated background elements */
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Footer main content */
+    .footer-content {
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 1.5fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Brand section */
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      line-height: 1;
+    }
+
+    .footer-logo span {
+      color: var(--footer-text);
+      font-size: 1rem;
+      font-weight: 400;
+      display: block;
+      margin-top: 0.5rem;
+      opacity: 0.7;
+    }
+
+    .footer-description {
+      color: var(--footer-secondary);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    /* Quick links */
+    .footer-links h3,
+    .footer-contact h3 {
+      color: var(--footer-text);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+
+    .footer-links h3::after,
+    .footer-contact h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+
+    .footer-links ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links ul li a {
+      color: var(--footer-secondary);
+      transition: var(--transition);
+      display: inline-block;
+      position: relative;
+      padding-left: 0;
+    }
+
+    .footer-links ul li a::before {
+      content: '→';
+      position: absolute;
+      left: -20px;
+      opacity: 0;
+      transition: var(--transition);
+      color: var(--primary-color);
+    }
+
+    .footer-links ul li a:hover {
+      color: var(--primary-color);
+      transform: translateX(20px);
+    }
+
+    .footer-links ul li a:hover::before {
+      opacity: 1;
+      left: 0;
+    }
+
+    /* Contact info */
+    .footer-contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--footer-secondary);
+      transition: var(--transition);
+    }
+
+    .footer-contact-item:hover {
+      color: var(--primary-color);
+      transform: translateX(5px);
+    }
+
+    .footer-contact-item i {
+      width: 20px;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+
+    /* Social media section */
+    .footer-social {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .footer-social h4 {
+      color: var(--footer-text);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .footer-social-icons {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      color: var(--footer-text);
+      font-size: 1.3rem;
+      transition: var(--transition);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .footer-social-icons a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--primary-color);
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .footer-social-icons a:hover {
       color: white;
-      padding: 3rem 5%;
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+    }
+
+    .footer-social-icons a:hover::before {
+      transform: scale(1);
+    }
+
+    .footer-social-icons a:hover i {
+      animation: bounce 0.5s ease;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Newsletter section */
+    .footer-newsletter {
       text-align: center;
+      margin: 2rem 0;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    footer .social-icons a {
-      background: transparent;
-      border: 2px solid white;
+    .footer-newsletter h4 {
+      color: var(--footer-text);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
     }
 
-    footer .social-icons a:hover {
-      background: white;
-      color: var(--footer-bg);
-      border-color: transparent;
+    .footer-newsletter p {
+      color: var(--footer-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
     }
 
-    /* Responsive Design */
+    .newsletter-form {
+      display: flex;
+      gap: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50px;
+      color: var(--footer-text);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .newsletter-form input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .newsletter-form input::placeholder {
+      color: var(--footer-secondary);
+    }
+
+    .newsletter-form button {
+      padding: 1rem 2rem;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Footer bottom */
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      color: var(--footer-secondary);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-bottom-links a {
+      color: var(--footer-secondary);
+      transition: var(--transition);
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Responsive Footer */
+    @media (max-width: 992px) {
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .footer-brand {
+        grid-column: span 2;
+        text-align: center;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .footer-links h3::after,
+      .footer-contact h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .footer-links ul li a:hover {
+        transform: translateX(10px);
+      }
+
+      .footer-contact-item {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-brand {
+        grid-column: span 1;
+      }
+
+      .footer-links ul {
+        align-items: center;
+      }
+
+      .footer-contact-info {
+        align-items: center;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .newsletter-form button {
+        width: 100%;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-bottom-links {
+        justify-content: center;
+      }
+    }
+
+    /* Responsive Design for other sections */
     @media (max-width: 992px) {
       .hero-content {
         flex-direction: column-reverse;
@@ -914,7 +1292,7 @@
               pixel-perfect implementations from design files.</p>
           </div>
 
-      <!--    <div class="service-card" data-aos="flip-left" data-aos-delay="100">
+          <!-- <div class="service-card" data-aos="flip-left" data-aos-delay="100">
             <div class="service-icon">
               <i class="fas fa-laravel"></i>
             </div>
@@ -922,7 +1300,7 @@
             <p>Developing robust back-end applications, RESTful APIs, and database-driven websites using Laravel's
               elegant syntax and powerful features.</p>
           </div>
--->
+          -->
           <div class="service-card" data-aos="flip-left" data-aos-delay="200">
             <div class="service-icon">
               <i class="fab fa-wordpress"></i>
@@ -976,14 +1354,15 @@
                       <div class="project-tech">
                         <span>Wordpress</span>
                         <span>E-commerce</span>
-                        
+
                       </div>
                     </div>
                   </div>
                   <div class="project-info">
                     <h3>Fashion E-commerce Store</h3>
-<p>A modern online fashion store showcasing women's clothing collections with a responsive design
-                      and easy shopping experience.</p>                    <div class="project-links">
+                    <p>A modern online fashion store showcasing women's clothing collections with a responsive design
+                      and easy shopping experience.</p>
+                    <div class="project-links">
                       <a href="https://rivastore.shop/" target="_blank" class="btn">Live Demo</a>
                     </div>
                   </div>
@@ -1005,7 +1384,7 @@
                   </div>
                   <div class="project-info">
                     <h3>Tech & Computer Store</h3>
-                    A responsive e-commerce platform for selling laptops, computer hardware, and accessories with a
+                    <p>A responsive e-commerce platform for selling laptops, computer hardware, and accessories with a
                       modern UI and smooth checkout system.</p>
                     <div class="project-links">
                       <a href="https://el-shikh.com/" target="_blank" class="btn">Live Demo</a>
@@ -1039,6 +1418,7 @@
                 </div>
               </div>
 
+              <!-- Project 5 -->
               <div class="swiper-slide">
                 <div class="project-card">
                   <div class="project-image">
@@ -1064,7 +1444,7 @@
                 </div>
               </div>
 
-              <!-- Project 5 - Example WordPress Project -->
+              <!-- Project 6 -->
               <div class="swiper-slide">
                 <div class="project-card">
                   <div class="project-image">
@@ -1089,18 +1469,18 @@
                   </div>
                 </div>
               </div>
-            </div>
-<!-- Project 6 - Perfume Store Management System -->
-                          <div class="swiper-slide">
+
+              <!-- Project 7 -->
+              <div class="swiper-slide">
                 <div class="project-card">
                   <div class="project-image">
                     <img src="Gold and Black Minimalist Perfume Logo.png" alt="protech-eg">
                     <div class="project-overlay">
                       <div class="project-tech">
-<span>React</span>
-<span>JavaScript</span>
-<span>CSS</span>
-<span>Responsive Design</span>
+                        <span>React</span>
+                        <span>JavaScript</span>
+                        <span>CSS</span>
+                        <span>Responsive Design</span>
                       </div>
                     </div>
                   </div>
@@ -1154,14 +1534,99 @@
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Yassen. All Rights Reserved.</p>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/YassenMosstafa17/" target="_blank" aria-label="Facebook"><i
-          class="fab fa-facebook-f"></i></a>
-      <a href="https://github.com/YASSENAI" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="@Yaseeeeen" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+  <!-- Improved Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Main Footer Content -->
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            YASSEN
+            <span>Web Developer</span>
+          </div>
+          <p class="footer-description">
+            Creating amazing digital experiences with clean code and creative design. Specialized in frontend development, WordPress, and modern web technologies.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-contact">
+          <h3>Get in Touch</h3>
+          <div class="footer-contact-info">
+            <div class="footer-contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>yassenmosstafa6@gmail.com</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-phone"></i>
+              <span>+20 112 268 4024</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Egypt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Media Section -->
+      <div class="footer-social">
+        <h4>FOLLOW ME</h4>
+        <div class="footer-social-icons">
+          <a href="https://www.facebook.com/YassenMosstafa17/" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/yassen_mosstafa/" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://github.com/YASSENAI" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/yourprofile/" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://twitter.com/yourprofile" target="_blank" aria-label="Twitter">
+            <i class="fab fa-x-twitter"></i>
+          </a>
+          <a href="https://t.me/Yaseeeeen" target="_blank" aria-label="Telegram">
+            <i class="fab fa-telegram-plane"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Newsletter Section (Optional) -->
+      <div class="footer-newsletter">
+        <h4>Stay Updated</h4>
+        <p>Subscribe to my newsletter for the latest projects and updates</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Newsletter feature coming soon!');">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2025 Yassen. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -1262,12 +1727,14 @@
 
     // Pause slider on hover for better UX
     const slider = document.querySelector('.swiper');
-    slider.addEventListener('mouseenter', () => {
-      swiper.autoplay.stop();
-    });
-    slider.addEventListener('mouseleave', () => {
-      swiper.autoplay.start();
-    });
+    if (slider) {
+      slider.addEventListener('mouseenter', () => {
+        swiper.autoplay.stop();
+      });
+      slider.addEventListener('mouseleave', () => {
+        swiper.autoplay.start();
+      });
+    }
   </script>
 </body>
 
