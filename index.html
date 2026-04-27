@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yassen | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Yassen | 3D Interactive Portfolio</title>
   <link rel="website icon" type="png" href="./04f8ec1e-afc7-4a0c-b617-a241e5196b0a.jpg">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -14,99 +14,89 @@
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
-    /* CSS Variables */
-    :root {
-      --primary-color: #2563eb;
-      --primary-dark: #1d4ed8;
-      --primary-light: #60a5fa;
-      --secondary-color: #10b981;
-      --text-color: #1f2937;
-      --bg-color: #ffffff;
-      --card-bg: #ffffff;
-      --header-bg: #f9fafb;
-      --footer-bg: #0a0f1c;
-      --footer-text: #f9fafb;
-      --footer-secondary: #94a3b8;
-      --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-      --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Dark Mode Variables */
-    body.dark {
-      --text-color: #f9fafb;
-      --bg-color: #111827;
-      --card-bg: #1f2937;
-      --header-bg: #1f2937;
-      --footer-bg: #030712;
-      --footer-secondary: #6b7280;
-      --shadow-sm: 0 4px 6px -1px rgb(255 255 255 / 0.1);
-      --shadow-md: 0 10px 15px -3px rgb(255 255 255 / 0.1);
-    }
-
-    /* Reset & Base */
+    /* Modern CSS Reset & Variables */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 80px;
+    :root {
+      --primary-color: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.6);
+      --secondary-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);
+      --text-light: #ffffff;
+      --text-dark: #1f2937;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --shadow-3d: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      --transition-smooth: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     body {
-      font-family: 'Inter', 'Poppins', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      font-family: 'Poppins', 'Inter', sans-serif;
+      background: radial-gradient(circle at 10% 20%, rgb(0, 10, 30), rgb(0, 0, 20));
+      color: var(--text-light);
+      overflow-x: hidden;
       line-height: 1.6;
-      transition: var(--transition);
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .container {
-      width: min(90%, 1200px);
-      margin: 0 auto;
-    }
-
-    /* Header */
-    header {
-      background: var(--header-bg);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      width: 100%;
+    /* Canvas 3D Background */
+    #canvas3d {
       position: fixed;
       top: 0;
-      z-index: 1000;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 10px;
+    }
+
+    /* Glassmorphism Header */
+    header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1200px;
+      background: rgba(15, 25, 45, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 60px;
+      padding: 0.8rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 5%;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
+      z-index: 1000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: var(--transition-smooth);
     }
 
     .logo {
-      color: var(--primary-color);
+      font-size: 1.8rem;
       font-weight: 800;
-      font-size: 2rem;
+      background: linear-gradient(45deg, #fff, var(--primary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       letter-spacing: -0.5px;
     }
 
@@ -116,26 +106,21 @@
     }
 
     .navigation a {
-      color: var(--text-color);
-      font-size: 1rem;
-      font-weight: 600;
-      transition: var(--transition);
+      color: #fff;
+      font-weight: 500;
+      transition: var(--transition-smooth);
       position: relative;
     }
 
     .navigation a::after {
       content: '';
       position: absolute;
-      bottom: -4px;
+      bottom: -5px;
       left: 0;
       width: 0;
       height: 2px;
       background: var(--primary-color);
-      transition: var(--transition);
-    }
-
-    .navigation a:hover {
-      color: var(--primary-color);
+      transition: 0.3s;
     }
 
     .navigation a:hover::after {
@@ -143,9 +128,9 @@
     }
 
     #themeToggle {
-      background: var(--primary-color);
+      background: rgba(255, 255, 255, 0.2);
       border: none;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       cursor: pointer;
       width: 45px;
       height: 45px;
@@ -153,158 +138,88 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: var(--transition);
+      transition: var(--transition-smooth);
       color: white;
-      margin-left: 1rem;
+      backdrop-filter: blur(5px);
     }
 
     #themeToggle:hover {
-      background: var(--primary-dark);
-      transform: rotate(15deg);
+      transform: rotate(15deg) scale(1.1);
+      background: var(--primary-color);
     }
 
-    /* Sections */
+    /* Container */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
     section {
       padding: 100px 0;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 4rem;
       position: relative;
-      color: var(--primary-color);
+      z-index: 5;
     }
 
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 4px;
-      background: var(--primary-color);
-      border-radius: 2px;
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-block;
-      padding: 12px 32px;
-      background: var(--primary-color);
-      color: white;
-      font-weight: 600;
-      border-radius: 30px;
-      transition: var(--transition);
-      border: 2px solid transparent;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--primary-color);
-      color: var(--primary-color);
-    }
-
-    .btn-outline:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    /* Hero Section - Modified */
+    /* Hero 3D enhanced */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 0 5%;
-      background: var(--bg-color);
+      justify-content: center;
+      text-align: center;
+      position: relative;
     }
 
     .hero-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
+      gap: 3rem;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      border-radius: 60px;
+      padding: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .hero-text {
       flex: 1;
+      text-align: left;
     }
 
     .hero-text h2 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-size: clamp(2.2rem, 6vw, 4rem);
       font-weight: 800;
       line-height: 1.2;
-      margin-bottom: 1rem;
     }
 
-    .hero-text h2 span {
-      color: var(--primary-color);
-      display: block;
-    }
-
-    .hero-text h3 {
-      font-size: clamp(1.1rem, 2vw, 1.5rem);
-      font-weight: 400;
-      margin: 1.5rem 0 2rem;
-      color: var(--text-color);
-      opacity: 0.8;
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6, #a855f7, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .hero-img {
       flex: 1;
-      display: flex;
-      justify-content: center;
-      position: relative;
-    }
-
-    .hero-img::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: var(--primary-color);
-      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-      opacity: 0.1;
-      animation: morph 8s ease-in-out infinite;
+      perspective: 1000px;
     }
 
     .hero-img img {
-      width: min(350px, 90%);
-      height: min(350px, 90%);
-      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-      object-fit: cover;
-      border: 4px solid var(--primary-color);
-      box-shadow: var(--shadow-lg);
-      animation: morph 8s ease-in-out infinite;
+      width: min(300px, 80%);
+      border-radius: 50%;
+      border: 3px solid rgba(59, 130, 246, 0.6);
+      box-shadow: 0 0 50px rgba(59, 130, 246, 0.3);
+      transition: transform 0.5s ease;
+      animation: float 6s ease-in-out infinite;
     }
 
-    @keyframes morph {
-
-      0%,
-      100% {
-        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-      }
-
-      33% {
-        border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
-      }
-
-      66% {
-        border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
-      }
+    @keyframes float {
+      0% { transform: translateY(0px) rotateY(0deg); }
+      50% { transform: translateY(-20px) rotateY(10deg); }
+      100% { transform: translateY(0px) rotateY(0deg); }
     }
 
     .social-icons {
@@ -315,212 +230,116 @@
     }
 
     .social-icons a {
-      display: inline-flex;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 45px;
-      height: 45px;
-      background: var(--primary-color);
-      color: white;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      transition: var(--transition);
+      font-size: 1.4rem;
+      transition: var(--transition-smooth);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .social-icons a:hover {
-      background: var(--primary-dark);
-      transform: translateY(-5px);
+      transform: translateY(-8px) scale(1.1);
+      background: var(--primary-color);
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
     }
 
-    /* About Section */
-    .about {
-      background: var(--bg-color);
+    /* Section Titles 3D */
+    .section-title {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 3rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      position: relative;
+      display: inline-block;
+      width: 100%;
     }
 
-    .about-content {
-      display: flex;
-      align-items: center;
-      gap: 4rem;
-      flex-wrap: wrap;
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary-color);
+      border-radius: 5px;
     }
 
-    .about-img {
-      flex: 1;
-      min-width: 280px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .about-img img {
-      width: min(350px, 100%);
-      height: auto;
-      border-radius: 20px;
-      box-shadow: var(--shadow-lg);
-      border: 4px solid var(--primary-color);
-      transition: var(--transition);
-    }
-
-    .about-img img:hover {
-      transform: scale(1.02);
-    }
-
-    .about-text {
-      flex: 2;
-    }
-
-    .about-text p {
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    /* Skills */
-    .skills-grid {
+    /* 3D Cards */
+    .skills-grid, .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
     }
 
-    .skill-card {
+    .skill-card, .service-card, .contact-card {
       background: var(--card-bg);
-      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
       padding: 2rem;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-      border: 1px solid transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transform-style: preserve-3d;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
-    .skill-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--primary-light);
-    }
-
-    .skill-card h3 {
-      margin-bottom: 1.5rem;
-      font-size: 1.3rem;
-      color: var(--primary-color);
-    }
-
-    .skill-items {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .skill-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .skill-info {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 500;
+    .skill-card:hover, .service-card:hover, .contact-card:hover {
+      transform: translateY(-10px) rotateX(5deg);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+      border-color: var(--primary-color);
     }
 
     .skill-progress {
       width: 100%;
-      height: 10px;
-      background: #e5e7eb;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       overflow: hidden;
+      margin-top: 8px;
     }
 
     .skill-progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      background: linear-gradient(90deg, #3b82f6, #a855f7);
       border-radius: 10px;
-      transition: width 1.5s ease;
       width: 0;
-    }
-
-    /* Services */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .service-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      transform: translateX(-100%);
-      transition: transform 0.5s ease;
-    }
-
-    .service-card:hover::before {
-      transform: translateX(0);
-    }
-
-    .service-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
+      transition: width 1.2s ease;
     }
 
     .service-icon {
       font-size: 3rem;
       color: var(--primary-color);
-      margin-bottom: 1.5rem;
-    }
-
-    .service-card h3 {
       margin-bottom: 1rem;
-      font-size: 1.5rem;
     }
 
-    .service-card p {
-      opacity: 0.8;
-    }
-
-    /* Projects Slider */
-    .projects-slider {
-      position: relative;
-      padding: 20px 0 60px;
-    }
-
+    /* Projects Swiper 3D Style */
     .swiper {
       width: 100%;
-      padding: 20px 10px;
-    }
-
-    .swiper-slide {
-      height: auto;
-      transition: var(--transition);
+      padding: 30px 0;
     }
 
     .project-card {
-      background: var(--card-bg);
-      border-radius: 24px;
+      background: rgba(20, 30, 55, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
       overflow: hidden;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s ease;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .project-card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-lg);
+      transform: scale(1.02) translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border-color: var(--primary-color);
     }
 
     .project-image {
@@ -533,609 +352,171 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform 0.6s ease;
     }
 
     .project-card:hover .project-image img {
       transform: scale(1.1);
     }
 
-    .project-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-      display: flex;
-      align-items: flex-end;
-      padding: 1.5rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .project-card:hover .project-overlay {
-      opacity: 1;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .project-tech span {
-      background: var(--primary-color);
-      color: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
     .project-info {
       padding: 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
     }
 
-    .project-info h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary-color);
-    }
-
-    .project-info p {
-      margin-bottom: 1rem;
-      opacity: 0.8;
-      flex: 1;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .project-links .btn {
-      padding: 0.6rem 1rem;
-      font-size: 0.9rem;
-      flex: 1;
-      text-align: center;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-      color: var(--primary-color);
-      background: var(--card-bg);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-    }
-
-    .swiper-button-next:hover,
-    .swiper-button-prev:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .swiper-button-next::after,
-    .swiper-button-prev::after {
-      font-size: 1.5rem;
-    }
-
-    .swiper-pagination-bullet {
-      width: 10px;
-      height: 10px;
-      background: var(--primary-color);
-      opacity: 0.5;
-      transition: var(--transition);
-    }
-
-    .swiper-pagination-bullet-active {
-      opacity: 1;
-      width: 30px;
-      border-radius: 10px;
-    }
-
-    /* Contact Section */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .contact-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 2rem;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-      transition: var(--transition);
-      border: 1px solid transparent;
-    }
-
-    .contact-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--primary-light);
-    }
-
-    .contact-icon {
-      font-size: 2.5rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-
-    .contact-card h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.3rem;
-    }
-
-    .contact-card p {
-      opacity: 0.8;
-    }
-
-    /* ===== IMPROVED FOOTER SECTION ===== */
+    /* Footer 3D */
     .footer {
-      background: var(--footer-bg);
-      color: var(--footer-text);
-      position: relative;
-      overflow: hidden;
-      padding: 5rem 5% 2rem;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem 5% 2rem;
+      margin-top: 4rem;
     }
 
-    /* Animated background elements */
-    .footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Footer main content */
     .footer-content {
       display: grid;
-      grid-template-columns: 1.5fr 2fr 1.5fr;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 3rem;
-      margin-bottom: 4rem;
-    }
-
-    /* Brand section */
-    .footer-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      max-width: 1200px;
+      margin: auto;
     }
 
     .footer-logo {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 800;
-      color: var(--primary-color);
-      line-height: 1;
+      background: linear-gradient(45deg, #fff, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    .footer-logo span {
-      color: var(--footer-text);
-      font-size: 1rem;
-      font-weight: 400;
-      display: block;
-      margin-top: 0.5rem;
-      opacity: 0.7;
+    .footer-links ul li a, .footer-contact-item {
+      color: #ccc;
+      transition: 0.3s;
     }
 
-    .footer-description {
-      color: var(--footer-secondary);
-      line-height: 1.8;
-      font-size: 0.95rem;
-    }
-
-    /* Quick links */
-    .footer-links h3,
-    .footer-contact h3 {
-      color: var(--footer-text);
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      position: relative;
-      padding-bottom: 0.75rem;
-    }
-
-    .footer-links h3::after,
-    .footer-contact h3::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 40px;
-      height: 3px;
-      background: var(--primary-color);
-      border-radius: 2px;
-    }
-
-    .footer-links ul {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .footer-links ul li a {
-      color: var(--footer-secondary);
-      transition: var(--transition);
-      display: inline-block;
-      position: relative;
-      padding-left: 0;
-    }
-
-    .footer-links ul li a::before {
-      content: '→';
-      position: absolute;
-      left: -20px;
-      opacity: 0;
-      transition: var(--transition);
-      color: var(--primary-color);
-    }
-
-    .footer-links ul li a:hover {
-      color: var(--primary-color);
-      transform: translateX(20px);
-    }
-
-    .footer-links ul li a:hover::before {
-      opacity: 1;
-      left: 0;
-    }
-
-    /* Contact info */
-    .footer-contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .footer-contact-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      color: var(--footer-secondary);
-      transition: var(--transition);
-    }
-
-    .footer-contact-item:hover {
+    .footer-links ul li a:hover, .footer-contact-item:hover {
       color: var(--primary-color);
       transform: translateX(5px);
-    }
-
-    .footer-contact-item i {
-      width: 20px;
-      color: var(--primary-color);
-      font-size: 1.2rem;
-    }
-
-    /* Social media section */
-    .footer-social {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 2rem;
-    }
-
-    .footer-social h4 {
-      color: var(--footer-text);
-      font-size: 1.1rem;
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-
-    .footer-social-icons {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: inline-block;
     }
 
     .footer-social-icons a {
       display: inline-flex;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50%;
-      color: var(--footer-text);
-      font-size: 1.3rem;
-      transition: var(--transition);
-      position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-    }
-
-    .footer-social-icons a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--primary-color);
-      transform: scale(0);
-      transition: transform 0.3s ease;
-      border-radius: 50%;
-      z-index: -1;
+      margin: 0 8px;
+      transition: 0.3s;
     }
 
     .footer-social-icons a:hover {
-      color: white;
-      border-color: var(--primary-color);
+      background: var(--primary-color);
       transform: translateY(-5px);
     }
 
-    .footer-social-icons a:hover::before {
-      transform: scale(1);
-    }
-
-    .footer-social-icons a:hover i {
-      animation: bounce 0.5s ease;
-    }
-
-    @keyframes bounce {
-
-      0%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.2);
-      }
-    }
-
-    /* Newsletter section */
-    .footer-newsletter {
-      text-align: center;
-      margin: 2rem 0;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .footer-newsletter h4 {
-      color: var(--footer-text);
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .footer-newsletter p {
-      color: var(--footer-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
-    }
-
-    .newsletter-form {
-      display: flex;
-      gap: 1rem;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .newsletter-form input {
-      flex: 1;
-      padding: 1rem 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50px;
-      color: var(--footer-text);
-      font-size: 1rem;
-      transition: var(--transition);
-    }
-
-    .newsletter-form input:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .newsletter-form input::placeholder {
-      color: var(--footer-secondary);
-    }
-
-    .newsletter-form button {
-      padding: 1rem 2rem;
-      background: var(--primary-color);
-      border: none;
-      border-radius: 50px;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      white-space: nowrap;
-    }
-
-    .newsletter-form button:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4);
-    }
-
-    /* Footer bottom */
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 2rem;
-      color: var(--footer-secondary);
-      font-size: 0.9rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-bottom-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .footer-bottom-links a {
-      color: var(--footer-secondary);
-      transition: var(--transition);
-    }
-
-    .footer-bottom-links a:hover {
-      color: var(--primary-color);
-    }
-
-    /* Responsive Footer */
-    @media (max-width: 992px) {
-      .footer-content {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-
-      .footer-brand {
-        grid-column: span 2;
-        text-align: center;
-        max-width: 500px;
-        margin: 0 auto;
-      }
-
-      .footer-links h3::after,
-      .footer-contact h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      .footer-links ul li a:hover {
-        transform: translateX(10px);
-      }
-
-      .footer-contact-item {
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .footer-brand {
-        grid-column: span 1;
-      }
-
-      .footer-links ul {
-        align-items: center;
-      }
-
-      .footer-contact-info {
-        align-items: center;
-      }
-
-      .newsletter-form {
-        flex-direction: column;
-      }
-
-      .newsletter-form button {
-        width: 100%;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .footer-bottom-links {
-        justify-content: center;
-      }
-    }
-
-    /* Responsive Design for other sections */
+    /* Responsive 3D adjustments */
     @media (max-width: 992px) {
       .hero-content {
-        flex-direction: column-reverse;
+        flex-direction: column;
         text-align: center;
       }
-
       .hero-text {
-        width: 100%;
+        text-align: center;
       }
-
-      .hero-text h2 span {
-        display: inline;
-      }
-
       .social-icons {
         justify-content: center;
       }
-    }
-
-    @media (max-width: 768px) {
       header {
-        padding: 1rem;
+        padding: 0.5rem 1.5rem;
+        width: 95%;
       }
-
       .navigation {
         display: none;
       }
-
-      .section-title {
-        font-size: 2rem;
-      }
-
-      .about-content {
+      /* Mobile menu - simple touch */
+      .navigation.active {
+        display: flex;
         flex-direction: column;
-        text-align: center;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(20px);
+        padding: 1.5rem;
+        border-radius: 20px;
+        gap: 1rem;
       }
-
-      .swiper-button-next,
-      .swiper-button-prev {
-        display: none;
-      }
-
-      .btn {
-        padding: 10px 24px;
+      .menu-toggle {
+        display: block;
+        font-size: 1.8rem;
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
       }
     }
 
-    @media (max-width: 480px) {
-      .hero-text h2 {
+    .menu-toggle {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      .section-title {
         font-size: 2rem;
       }
-
-      .project-links {
-        flex-direction: column;
+      .btn {
+        padding: 8px 20px;
       }
-
-      .project-links .btn {
-        width: 100%;
+      .swiper-button-next, .swiper-button-prev {
+        display: none;
       }
+    }
+
+    /* Buttons 3D */
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: linear-gradient(45deg, #3b82f6, #2563eb);
+      border-radius: 40px;
+      font-weight: 600;
+      margin: 0.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+      border: none;
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #3b82f6;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .contact-card a {
+      color: inherit;
+      text-decoration: none;
     }
   </style>
 </head>
 
 <body>
+
+  <!-- 3D Canvas Background -->
+  <canvas id="canvas3d"></canvas>
+
   <header>
-    <a href="#" class="logo">Yassen</a>
-    <nav class="navigation">
+    <div class="logo">YASSEN<span style="font-size:0.9rem;">.dev</span></div>
+    <nav class="navigation" id="navMenu">
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
@@ -1143,598 +524,268 @@
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </nav>
-    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+    <button id="themeToggle" aria-label="3D Toggle">🌙</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
   </header>
 
   <main>
-    <!-- Hero Section - Clean version without blur -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
-      <div class="hero-content">
-        <div class="hero-text" data-aos="fade-right">
-          <h2>HELLO, I'M <span>YASSEN</span></h2>
-          <h3>A passionate Web Developer creating amazing digital experiences</h3>
-          <div class="cta-buttons">
-            <a href="#projects" class="btn">View my work</a>
-            <a href="resume2.pdf" class="btn btn-outline" download>Download CV</a>
+      <div class="container">
+        <div class="hero-content" data-aos="fade-up">
+          <div class="hero-text">
+            <h2>HELLO, I'M <span class="gradient-text">YASSEN</span></h2>
+            <h3 style="font-size: 1.4rem; margin: 1rem 0;">3D Interactive Web Developer & Creative Coder</h3>
+            <div>
+              <a href="#projects" class="btn">Explore 3D World</a>
+              <a href="resume2.pdf" class="btn btn-outline" download>Download CV</a>
+            </div>
+            <div class="social-icons">
+              <a href="https://www.facebook.com/YassenMosstafa17/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/yassen_mosstafa/" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="https://github.com/YASSENAI" target="_blank"><i class="fab fa-github"></i></a>
+              <a href="https://t.me/Yaseeeeen" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+            </div>
           </div>
-          <div class="social-icons">
-            <a href="https://www.facebook.com/YassenMosstafa17/" target="_blank" aria-label="Facebook"><i
-                class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/yassen_mosstafa/" target="_blank" aria-label="Instagram"><i
-                class="fab fa-instagram"></i></a>
-            <a href="https://github.com/YASSENAI" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="@Yaseeeeen" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+          <div class="hero-img">
+            <img src="./YASSEN.jpg" alt="Yassen 3D Profile">
           </div>
-        </div>
-        <div class="hero-img" data-aos="fade-left">
-          <img src="./YASSEN.jpg" alt="Yassen Profile Photo">
         </div>
       </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About -->
     <section class="about" id="about">
       <div class="container">
         <h2 class="section-title" data-aos="fade-up">About Me</h2>
-        <div class="about-content">
-          <div class="about-img" data-aos="fade-right">
-            <img src="./YASSEN.jpg" alt="Yassen About Photo">
+        <div class="about-content" style="display: flex; gap: 3rem; flex-wrap: wrap; align-items: center;">
+          <div class="about-img" style="flex:1;" data-aos="fade-right">
+            <img src="./YASSEN.jpg" alt="About" style="border-radius: 30px; width: 100%; max-width: 300px; border: 3px solid #3b82f6; box-shadow: 0 20px 30px rgba(0,0,0,0.4);">
           </div>
-          <div class="about-text" data-aos="fade-left">
-            <p>I'm a passionate web developer with a strong foundation in creating dynamic, responsive, and
-              user-friendly websites. My journey in web development began with a curiosity about how things work on the
-              internet, and it has grown into a full-fledged career where I combine creativity with technical expertise.
-            </p>
-            <p>I specialize in both front-end and back-end technologies, with a particular focus on Laravel for robust
-              back-end solutions and WordPress for flexible content management systems. I believe in writing clean,
-              maintainable code and staying updated with the latest industry trends.</p>
-            <p>When I'm not coding, I enjoy contributing to open-source projects, exploring new technologies, and
-              sharing my knowledge with the developer community through blogging and mentorship.</p>
+          <div class="about-text" style="flex:2;" data-aos="fade-left">
+            <p style="font-size: 1.1rem;">I'm a passionate web developer blending 3D aesthetics with functional design. My journey started with curiosity and evolved into crafting immersive digital experiences using cutting-edge technologies like Three.js, React, and Laravel.</p>
+            <p>I specialize in creating responsive, futuristic websites that stand out. With expertise in WordPress, PHP, and frontend frameworks, I bring ideas to life with clean code and creative vision.</p>
+            <p>Let's build something extraordinary together.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills with 3D vibe -->
     <section class="skills" id="skills">
       <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Technical Skills</h2>
+        <h2 class="section-title" data-aos="fade-up">Technical Powers</h2>
         <div class="skills-grid">
-          <!-- Frontend Skills -->
           <div class="skill-card" data-aos="zoom-in">
-            <h3>Frontend Development</h3>
-            <div class="skill-items">
-              <div class="skill-item">
-                <div class="skill-info">
-                  <span>HTML5 & CSS3</span>
-                  <span>95%</span>
-                </div>
-                <div class="skill-progress">
-                  <div class="skill-progress-bar" style="width: 95%"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <div class="skill-info">
-                  <span>JavaScript (ES6+)</span>
-                  <span>50%</span>
-                </div>
-                <div class="skill-progress">
-                  <div class="skill-progress-bar" style="width: 50%"></div>
-                </div>
-              </div>
-            </div>
+            <h3>Frontend Magic</h3>
+            <div class="skill-item"><span>HTML5/CSS3</span><div class="skill-progress"><div class="skill-progress-bar" style="width: 95%"></div></div></div>
+            <div class="skill-item"><span>JavaScript/Three.js</span><div class="skill-progress"><div class="skill-progress-bar" style="width: 70%"></div></div></div>
+            <div class="skill-item"><span>React.js</span><div class="skill-progress"><div class="skill-progress-bar" style="width: 60%"></div></div></div>
           </div>
-
-          <!-- Backend Skills -->
           <div class="skill-card" data-aos="zoom-in" data-aos-delay="100">
-            <h3>Backend Development</h3>
-            <div class="skill-items">
-              <div class="skill-item">
-                <div class="skill-info">
-                  <span>PHP & MySQL</span>
-                  <span>70%</span>
-                </div>
-                <div class="skill-progress">
-                  <div class="skill-progress-bar" style="width: 70%"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <div class="skill-info">
-                  <span>Laravel</span>
-                  <span>65%</span>
-                </div>
-                <div class="skill-progress">
-                  <div class="skill-progress-bar" style="width: 65%"></div>
-                </div>
-              </div>
-            </div>
+            <h3>Backend Engine</h3>
+            <div class="skill-item"><span>PHP & MySQL</span><div class="skill-progress"><div class="skill-progress-bar" style="width: 75%"></div></div></div>
+            <div class="skill-item"><span>Laravel</span><div class="skill-progress"><div class="skill-progress-bar" style="width: 68%"></div></div></div>
           </div>
-
-          <!-- CMS & Others -->
           <div class="skill-card" data-aos="zoom-in" data-aos-delay="200">
-            <h3>CMS & Others</h3>
-            <div class="skill-items">
-              <div class="skill-item">
-                <div class="skill-info">
-                  <span>WordPress Developer</span>
-                  <span>80%</span>
-                </div>
-                <div class="skill-progress">
-                  <div class="skill-progress-bar" style="width: 80%"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <div class="skill-info">
-                  <span>SQL Database</span>
-                  <span>70%</span>
-                </div>
-                <div class="skill-progress">
-                  <div class="skill-progress-bar" style="width: 70%"></div>
-                </div>
-              </div>
-            </div>
+            <h3>CMS & Tools</h3>
+            <div class="skill-item"><span>WordPress</span><div class="skill-progress"><div class="skill-progress-bar" style="width: 85%"></div></div></div>
+            <div class="skill-item"><span>UI/UX Design</span><div class="skill-progress"><div class="skill-progress-bar" style="width: 70%"></div></div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services -->
     <section class="services" id="services">
       <div class="container">
-        <h2 class="section-title" data-aos="fade-up">My Services</h2>
+        <h2 class="section-title" data-aos="fade-up">3D Services</h2>
         <div class="services-grid">
-          <div class="service-card" data-aos="flip-left">
-            <div class="service-icon">
-              <i class="fas fa-code"></i>
-            </div>
-            <h3>Frontend Developer</h3>
-            <p>Building responsive, interactive, and modern user interfaces using HTML5, CSS3, and JavaScript. Creating
-              pixel-perfect implementations from design files.</p>
-          </div>
-
-          <!-- <div class="service-card" data-aos="flip-left" data-aos-delay="100">
-            <div class="service-icon">
-              <i class="fas fa-laravel"></i>
-            </div>
-            <h3>Laravel Developer</h3>
-            <p>Developing robust back-end applications, RESTful APIs, and database-driven websites using Laravel's
-              elegant syntax and powerful features.</p>
-          </div>
-          -->
-          <div class="service-card" data-aos="flip-left" data-aos-delay="200">
-            <div class="service-icon">
-              <i class="fab fa-wordpress"></i>
-            </div>
-            <h3>WordPress Developer</h3>
-            <p>Creating custom WordPress themes, plugins, and full-featured websites. Expertise in WooCommerce, custom
-              post types, and advanced custom fields.</p>
-          </div>
+          <div class="service-card" data-aos="flip-left"><div class="service-icon"><i class="fas fa-cube"></i></div><h3>3D Web Experiences</h3><p>Interactive 3D scenes, product visualizations with Three.js & WebGL.</p></div>
+          <div class="service-card" data-aos="flip-left" data-aos-delay="100"><div class="service-icon"><i class="fab fa-wordpress"></i></div><h3>WordPress 3D Integration</h3><p>Immersive WP sites with 3D elements & smooth animations.</p></div>
+          <div class="service-card" data-aos="flip-left" data-aos-delay="200"><div class="service-icon"><i class="fas fa-mobile-alt"></i></div><h3>Responsive 3D Design</h3><p>Fully responsive, retina-ready 3D layouts for all devices.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- Projects Slider Section -->
+    <!-- Projects Slider -->
     <section class="projects" id="projects">
       <div class="container">
-        <h2 class="section-title" data-aos="fade-up">My Projects</h2>
-        <div class="projects-slider">
-          <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-              <!-- Project 1 -->
-              <div class="swiper-slide">
-                <div class="project-card">
-                  <div class="project-image">
-                    <img src="./Brown Black Minimalist Square Wood Logo (2).png" alt="Wood Website">
-                    <div class="project-overlay">
-                      <div class="project-tech">
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>JavaScript</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-info">
-                    <h3>Wood Website</h3>
-                    <p>A modern, responsive website for a woodworking company showcasing their products and
-                      craftsmanship.</p>
-                    <div class="project-links">
-                      <a href="https://yassenai.github.io/Wood-Mark12/index.html" target="_blank" class="btn">Live
-                        Demo</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project 2 -->
-              <div class="swiper-slide">
-                <div class="project-card">
-                  <div class="project-image">
-                    <img src="ChatGPT Image Nov 23, 2025, 04_19_33 PM.png" alt="E-commerce Store">
-                    <div class="project-overlay">
-                      <div class="project-tech">
-                        <span>Wordpress</span>
-                        <span>E-commerce</span>
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-info">
-                    <h3>Fashion E-commerce Store</h3>
-                    <p>A modern online fashion store showcasing women's clothing collections with a responsive design
-                      and easy shopping experience.</p>
-                    <div class="project-links">
-                      <a href="https://rivastore.shop/" target="_blank" class="btn">Live Demo</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project 3 -->
-              <div class="swiper-slide">
-                <div class="project-card">
-                  <div class="project-image">
-                    <img src="cropped-WhatsApp-Image-2025-12-23-at-8.06.55-PM.webp" alt="Egypt Tourism">
-                    <div class="project-overlay">
-                      <div class="project-tech">
-                        <span>WordPress</span>
-                        <span>WooCommerce</span>
-                        <span>Elementor</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-info">
-                    <h3>Tech & Computer Store</h3>
-                    <p>A responsive e-commerce platform for selling laptops, computer hardware, and accessories with a
-                      modern UI and smooth checkout system.</p>
-                    <div class="project-links">
-                      <a href="https://el-shikh.com/" target="_blank" class="btn">Live Demo</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project 4 -->
-              <div class="swiper-slide">
-                <div class="project-card">
-                  <div class="project-image">
-                    <img src="Orange and Blue Adventure Travel Agency Logo.png" alt="CRM System">
-                    <div class="project-overlay">
-                      <div class="project-tech">
-                        <span>HTML5</span>
-                        <span>CSS3</span>
-                        <span>JavaScript</span>
-                        <span>Responsive Design</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-info">
-                    <h3>Travel & Tourism Website</h3>
-                    <p>A responsive travel website showcasing destinations, tour packages, and booking sections with a
-                      modern and user-friendly design.</p>
-                    <div class="project-links">
-                      <a href="https://travelsinusa.netlify.app/" target="_blank" class="btn">Live Demo</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project 5 -->
-              <div class="swiper-slide">
-                <div class="project-card">
-                  <div class="project-image">
-                    <img src="Colorful Modern Infinity Technology Free Logo.png" alt="CRM System">
-                    <div class="project-overlay">
-                      <div class="project-tech">
-                        <span>HTML5</span>
-                        <span>CSS3</span>
-                        <span>JavaScript</span>
-                        <span>PHP</span>
-                        <span>MySQL</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-info">
-                    <h3>Client & Expense Management System</h3>
-                    <p>A web-based system designed to manage client payments and track personal expenses. It allows
-                      users to record income from clients and monitor spending to maintain better financial control.</p>
-                    <div class="project-links">
-                      <a href="https://accountingsystem.ct.ws/" target="_blank" class="btn">Live Demo</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project 6 -->
-              <div class="swiper-slide">
-                <div class="project-card">
-                  <div class="project-image">
-                    <img src="PROTech Logo 1.jpg" alt="protech-eg">
-                    <div class="project-overlay">
-                      <div class="project-tech">
-                        <span>HTML5</span>
-                        <span>CSS3</span>
-                        <span>JavaScript</span>
-                        <span>PHP</span>
-                        <span>MySQL</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-info">
-                    <h3>Computer Hardware Store</h3>
-                    <p>A fully responsive online store for laptops, computer parts, and accessories with product
-                      listings, shopping cart functionality, and a seamless checkout experience.</p>
-                    <div class="project-links">
-                      <a href="https://protech-eg.shop/home" target="_blank" class="btn">Live Demo</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project 7 -->
-              <div class="swiper-slide">
-                <div class="project-card">
-                  <div class="project-image">
-                    <img src="Gold and Black Minimalist Perfume Logo.png" alt="protech-eg">
-                    <div class="project-overlay">
-                      <div class="project-tech">
-                        <span>React</span>
-                        <span>JavaScript</span>
-                        <span>CSS</span>
-                        <span>Responsive Design</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-info">
-                    <h3>Perfume Store Management System</h3>
-                    <p>A modern web application built for managing a perfume store with multiple branches. The system allows users to manage products, track inventory 
-                      across branches, and organize store operations through an intuitive interface.</p>
-                    <div class="project-links">
-                      <a href="https://perfumestoresystem.netlify.app/login" target="_blank" class="btn">Live Demo</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Navigation -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
+        <h2 class="section-title" data-aos="fade-up">Featured 3D Projects</h2>
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><div class="project-card"><div class="project-image"><img src="./Brown Black Minimalist Square Wood Logo (2).png" alt="Wood"></div><div class="project-info"><h3>Wood 3D Showcase</h3><p>Responsive HTML/CSS with 3D transitions.</p><a href="https://yassenai.github.io/Wood-Mark12/index.html" class="btn" target="_blank">Live Demo</a></div></div></div>
+            <div class="swiper-slide"><div class="project-card"><div class="project-image"><img src="ChatGPT Image Nov 23, 2025, 04_19_33 PM.png" alt="Fashion"></div><div class="project-info"><h3>RivaStore | Fashion</h3><p>WordPress E-commerce modern 3D feel.</p><a href="https://rivastore.shop/" class="btn" target="_blank">Live Demo</a></div></div></div>
+            <div class="swiper-slide"><div class="project-card"><div class="project-image"><img src="cropped-WhatsApp-Image-2025-12-23-at-8.06.55-PM.webp" alt="Tech"></div><div class="project-info"><h3>El-Shikh Store</h3><p>Tech products with smooth interactions.</p><a href="https://el-shikh.com/" class="btn" target="_blank">Live Demo</a></div></div></div>
+            <div class="swiper-slide"><div class="project-card"><div class="project-image"><img src="Orange and Blue Adventure Travel Agency Logo.png" alt="Travel"></div><div class="project-info"><h3>TravelsinUSA</h3><p>Travel Agency 3D animated.</p><a href="https://travelsinusa.netlify.app/" class="btn" target="_blank">Live Demo</a></div></div></div>
+            <div class="swiper-slide"><div class="project-card"><div class="project-image"><img src="Colorful Modern Infinity Technology Free Logo.png" alt="Accounting"></div><div class="project-info"><h3>Accounting System</h3><p>PHP MySQL financial manager.</p><a href="https://accountingsystem.ct.ws/" class="btn" target="_blank">Live Demo</a></div></div></div>
+            <div class="swiper-slide"><div class="project-card"><div class="project-image"><img src="PROTech Logo 1.jpg" alt="ProTech"></div><div class="project-info"><h3>ProTech Hardware</h3><p>E-commerce for computer parts.</p><a href="https://protech-eg.shop/home" class="btn" target="_blank">Live Demo</a></div></div></div>
+            <div class="swiper-slide"><div class="project-card"><div class="project-image"><img src="Gold and Black Minimalist Perfume Logo.png" alt="Perfume"></div><div class="project-info"><h3>Perfume Store System</h3><p>React based multi-branch management.</p><a href="https://perfumestoresystem.netlify.app/login" class="btn" target="_blank">Live Demo</a></div></div></div>
           </div>
+          <div class="swiper-button-next"></div><div class="swiper-button-prev"></div><div class="swiper-pagination"></div>
         </div>
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section class="contact" id="contact">
       <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Let's Work Together</h2>
-        <div class="contact-grid">
-          <div class="contact-card" data-aos="fade-right">
-            <a href="mailto:yassenmosstafa6@gmail.com">
-              <div class="contact-icon">
-                <i class="fas fa-envelope"></i>
-              </div>
-              <h3>Email</h3>
-              <p>yassenmosstafa6@gmail.com</p>
-            </a>
-          </div>
-
-          <div class="contact-card" data-aos="fade-left">
-            <a href="https://wa.me/201122648024" target="_blank">
-              <div class="contact-icon">
-                <i class="fab fa-whatsapp"></i>
-              </div>
-              <h3>WhatsApp</h3>
-              <p>+20 112 268 4024</p>
-            </a>
-          </div>
+        <h2 class="section-title" data-aos="fade-up">Connect in 3D Space</h2>
+        <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); max-width: 800px; margin: auto;">
+          <div class="contact-card" data-aos="fade-right"><a href="mailto:yassenmosstafa6@gmail.com"><div class="service-icon"><i class="fas fa-envelope"></i></div><h3>Email Me</h3><p>yassenmosstafa6@gmail.com</p></a></div>
+          <div class="contact-card" data-aos="fade-left"><a href="https://wa.me/201122648024" target="_blank"><div class="service-icon"><i class="fab fa-whatsapp"></i></div><h3>WhatsApp</h3><p>+20 112 268 4024</p></a></div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Improved Footer Section -->
   <footer class="footer">
-    <div class="footer-container">
-      <!-- Main Footer Content -->
-      <div class="footer-content">
-        <!-- Brand Section -->
-        <div class="footer-brand">
-          <div class="footer-logo">
-            YASSEN
-            <span>Web Developer</span>
-          </div>
-          <p class="footer-description">
-            Creating amazing digital experiences with clean code and creative design. Specialized in frontend development, WordPress, and modern web technologies.
-          </p>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="footer-contact">
-          <h3>Get in Touch</h3>
-          <div class="footer-contact-info">
-            <div class="footer-contact-item">
-              <i class="fas fa-envelope"></i>
-              <span>yassenmosstafa6@gmail.com</span>
-            </div>
-            <div class="footer-contact-item">
-              <i class="fas fa-phone"></i>
-              <span>+20 112 268 4024</span>
-            </div>
-            <div class="footer-contact-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Egypt</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Social Media Section -->
-      <div class="footer-social">
-        <h4>FOLLOW ME</h4>
-        <div class="footer-social-icons">
-          <a href="https://www.facebook.com/YassenMosstafa17/" target="_blank" aria-label="Facebook">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://www.instagram.com/yassen_mosstafa/" target="_blank" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://github.com/YASSENAI" target="_blank" aria-label="GitHub">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/yassen-mosstafa-a02119251/" target="_blank" aria-label="LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-       <!--   <a href="https://twitter.com/yourprofile" target="_blank" aria-label="Twitter">
-            <i class="fab fa-x-twitter"></i>
-          </a> -->
-          <a href="https://t.me/Yaseeeeen" target="_blank" aria-label="Telegram">
-            <i class="fab fa-telegram-plane"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Newsletter Section (Optional) -->
-      <div class="footer-newsletter">
-        <h4>Stay Updated</h4>
-        <p>Subscribe to my newsletter for the latest projects and updates</p>
-        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Newsletter feature coming soon!');">
-          <input type="email" placeholder="Enter your email" required>
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-
-      <!-- Footer Bottom -->
-      <div class="footer-bottom">
-        <p>&copy; 2025 Yassen. All Rights Reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Cookie Policy</a>
-        </div>
-      </div>
+    <div class="footer-content">
+      <div><div class="footer-logo">YASSEN<span style="font-size:1rem;">_3D</span></div><p style="margin-top: 1rem;">Crafting the future of web with 3D aesthetics & performance.</p></div>
+      <div class="footer-links"><h3>Explore</h3><ul><li><a href="#home">Home</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact">Hire Me</a></li></ul></div>
+      <div><h3>Social Dimension</h3><div class="footer-social-icons"><a href="https://github.com/YASSENAI"><i class="fab fa-github"></i></a><a href="https://www.linkedin.com/in/yassen-mosstafa-a02119251/"><i class="fab fa-linkedin-in"></i></a><a href="https://www.instagram.com/yassen_mosstafa/"><i class="fab fa-instagram"></i></a></div></div>
     </div>
+    <div style="text-align: center; margin-top: 3rem; opacity: 0.7;">© 2025 Yassen | 3D Interactive Portfolio</div>
   </footer>
 
-  <!-- Scripts -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    // Initialize AOS
-    AOS.init({
-      duration: 800,
-      once: true,
-      offset: 50,
-      easing: 'ease-in-out'
-    });
-
-    // Dark Mode Toggle
-    const themeBtn = document.getElementById("themeToggle");
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-      document.body.classList.add("dark");
-      themeBtn.textContent = "☀️";
+  <!-- Three.js Library -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+      }
     }
+  </script>
 
-    themeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      const isDark = document.body.classList.contains("dark");
-      themeBtn.textContent = isDark ? "☀️" : "🌙";
-      localStorage.setItem("theme", isDark ? "dark" : "light");
+  <script type="module">
+    import * as THREE from 'three';
+
+    // 3D Background Setup
+    const canvas = document.getElementById('canvas3d');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    // Floating particles / stars
+    const geometry = new THREE.BufferGeometry();
+    const particlesCount = 1500;
+    const posArray = new Float32Array(particlesCount * 3);
+    for(let i = 0; i < particlesCount * 3; i += 3) {
+      posArray[i] = (Math.random() - 0.5) * 200;
+      posArray[i+1] = (Math.random() - 0.5) * 100;
+      posArray[i+2] = (Math.random() - 0.5) * 80 - 40;
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const material = new THREE.PointsMaterial({
+      size: 0.2,
+      color: 0x3b82f6,
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending
     });
+    const particlesMesh = new THREE.Points(geometry, material);
+    scene.add(particlesMesh);
 
-    // Smooth Scrolling
+    // Central glowing torus knot
+    const knotGeo = new THREE.TorusKnotGeometry(1.2, 0.3, 128, 16, 3, 4);
+    const knotMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, emissive: 0x1e3a8a, roughness: 0.3, metalness: 0.7 });
+    const knot = new THREE.Mesh(knotGeo, knotMat);
+    scene.add(knot);
+    
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0x404060);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+    const pointLight2 = new THREE.PointLight(0x4f46e5, 0.8);
+    pointLight2.position.set(-3, 2, 4);
+    scene.add(pointLight2);
+    
+    camera.position.z = 8;
+    camera.position.y = 1;
+    
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (event) => {
+      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+    });
+    
+    function animate() {
+      requestAnimationFrame(animate);
+      knot.rotation.x += 0.008;
+      knot.rotation.y += 0.012;
+      particlesMesh.rotation.y += 0.002;
+      particlesMesh.rotation.x += 0.001;
+      
+      // subtle camera movement
+      camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+      camera.position.y += (-mouseY * 0.3 - camera.position.y) * 0.05;
+      camera.lookAt(scene.position);
+      
+      renderer.render(scene, camera);
+    }
+    animate();
+    
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+
+  <script>
+    // AOS, Swiper, Dark Mode Toggle & Mobile Menu
+    AOS.init({ duration: 800, once: true });
+    
+    const themeBtn = document.getElementById("themeToggle");
+    let darkMode = false;
+    themeBtn.addEventListener("click", () => {
+      darkMode = !darkMode;
+      document.body.style.background = darkMode ? "radial-gradient(circle at 10% 20%, #0a0f1f, #030712)" : "radial-gradient(circle at 10% 20%, rgb(0, 10, 30), rgb(0, 0, 20))";
+      themeBtn.textContent = darkMode ? "☀️" : "🌙";
+    });
+    
+    const swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1, spaceBetween: 20, loop: true, autoplay: { delay: 3000, disableOnInteraction: false },
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      breakpoints: { 640: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+    });
+    
+    // skill bars observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          const bars = entry.target.querySelectorAll('.skill-progress-bar');
+          bars.forEach(bar => { const w = bar.style.width; bar.style.width = '0'; setTimeout(() => bar.style.width = w, 100); });
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.skill-card').forEach(card => observer.observe(card));
+    
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => navMenu.classList.remove('active'));
+    });
+    
+    // smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+        if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
-
-    // Initialize Swiper
-    const swiper = new Swiper(".mySwiper", {
-      slidesPerView: 1,
-      spaceBetween: 20,
-      loop: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 30,
-        },
-        1024: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-        },
-      },
-    });
-
-    // Animate skill bars on view
-    const skillObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const bars = entry.target.querySelectorAll('.skill-progress-bar');
-          bars.forEach(bar => {
-            const width = bar.style.width;
-            bar.style.width = '0';
-            setTimeout(() => {
-              bar.style.width = width;
-            }, 100);
-          });
-        }
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.skill-card').forEach(card => {
-      skillObserver.observe(card);
-    });
-
-    // Pause slider on hover for better UX
-    const slider = document.querySelector('.swiper');
-    if (slider) {
-      slider.addEventListener('mouseenter', () => {
-        swiper.autoplay.stop();
-      });
-      slider.addEventListener('mouseleave', () => {
-        swiper.autoplay.start();
-      });
-    }
   </script>
 </body>
 
